@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pypdf
+qdrant-client=1.9.0
+google-cloud-aiplatform
+python-dotenv
+python-multipart
+
