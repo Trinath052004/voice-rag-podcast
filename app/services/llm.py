@@ -1,13 +1,16 @@
 import os
+from dotenv import load_dotenv
 import google.generativeai as genai
 from app.rag.retriever import retrieve
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+load_dotenv()
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 model = genai.GenerativeModel("gemini-flash-latest")
 
 
-def generate_response(question: str):
+def call_gemini(question: str):
     contexts = retrieve(question, top_k=3)
 
     if not contexts:

@@ -1,8 +1,19 @@
 fastapi
 uvicorn
 pypdf
-qdrant-client=1.9.0
+qdrant-client==1.9.0
 google-cloud-aiplatform
 python-dotenv
 python-multipart
+elevenlabs
+google-generativeai
+sentence-transformers
+pydantic
+pytest
+httpx
+pytest-asyncio
+
+
+
+
 
