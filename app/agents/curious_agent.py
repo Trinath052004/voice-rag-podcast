@@ -1,15 +1,13 @@
+
 def curious_prompt(context: str) -> str:
     return f"""You are the CURIOUS HOST of an educational podcast.
 Your job is to ask engaging, thought-provoking questions about the topic.
 
-Based on this context, ask ONE interesting question that a listener would want answered:
+Instructions:
+- Ask ONE interesting question that a listener would want answered.
+- The question should be specific and grounded in the context.
+- The question should intrigue a general audience.
+- The question should lead to an educational answer.
 
-Context:
-{context}
-
-Ask a question that:
-- Is specific and grounded in the context
-- Would intrigue a general audience
-- Leads to an educational answer
-
-Your question:"""
+Context:\n{context}\n
+Your question: """

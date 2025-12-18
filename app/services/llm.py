@@ -1,7 +1,9 @@
+
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 from app.rag.retriever import retrieve
+import logging
 
 load_dotenv()
 
@@ -9,31 +11,34 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 model = genai.GenerativeModel("gemini-flash-latest")
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
 
 def call_gemini(question: str):
-    contexts = retrieve(question, top_k=3)
+    try:
+        contexts = retrieve(question, top_k=3)
 
-    if not contexts:
-        context_text = "No relevant context found."
-    else:
-        context_text = "\n\n".join(contexts)
+        if not contexts:
+            context_text = "No relevant context found."
+        else:
+            context_text = "\n\n".join(contexts)
 
-    prompt = f"""
-You are an assistant that answers ONLY using the context below.
-If the answer is not in the context, say "I don't know".
+        # Improved prompt with clear instructions and formatting
+        prompt = f"""You are a helpful and informative podcast assistant.
+        Your goal is to answer the user's question based on the context provided.
+        If the context does not contain the answer, respond with "I don't know".
+        Please provide a concise and accurate answer.
 
-Context:
-{context_text}
+        Context:\n{context_text}
 
-Question:
-{question}
+        Question:\n{question}
 
-Answer:
-"""
+        Answer:"""
 
-    response = model.generate_content(prompt)
-    return response.text
-
-
-
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        logging.error(f"Error during Gemini call: {e}")
+        return "I don't know"
 

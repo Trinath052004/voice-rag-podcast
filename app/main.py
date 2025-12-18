@@ -1,20 +1,42 @@
 
-
-```language app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.upload import router as upload_router
 from app.api.conversation import router as conversation_router
+import logging
+import os
+from contextlib import asynccontextmanager
 
-app = FastAPI(title="Voice RAG Podcast")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup logic
+    logging.info("Starting up the application")
+    print("\nRegistered Routes:")
+    for route in app.routes:
+        print(f"{route.path} - {route.methods}")
+    yield
+    # Shutdown logic (if needed):app
+    logging.info("Shutting down the application")
+
+
+app = FastAPI(title="Voice RAG Podcast", lifespan=lifespan)
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # CORS for frontend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
+if os.getenv("ENVIRONMENT") == "development":
+    allow_origins = [
         "http://localhost:3000",
         "http://localhost:5173",
-    ],
+    ]
+else:
+    # TODO: Configure allowed origins for production
+    allow_origins = []  # Replace with your production origins
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allow_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,18 +46,7 @@ app.include_router(upload_router, prefix="/upload", tags=["upload"])
 app.include_router(conversation_router, prefix="/conversation", tags=["conversation"])
 
 
-
-
-
-
-
-@app.on_event("startup")
-async def startup_event():
-    print("\nRegistered Routes:")
-    for route in app.routes:
-        print(f"{route.path} - {route.methods}")
-
 @app.get("/")
 def health():
     return {"status": "ok"}
-```
+

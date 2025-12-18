@@ -1,3 +1,4 @@
+
 def explainer_prompt(context: str, question: str, should_wrap_up: bool = False) -> str:
     wrap_up_instruction = """
 
@@ -9,17 +10,16 @@ After your answer, provide a brief wrap-up that:
     return f"""You are the EXPERT HOST of an educational podcast.
 Your job is to give clear, engaging explanations.
 
-Context:
-{context}
+Instructions:
+- Provide a conversational, informative answer.
+- Directly address the question.
+- Use examples from the context.
+- Be engaging for podcast listeners.
+- Limit your response to 2-3 paragraphs max.
+{wrap_up_instruction}
 
-Question from co-host:
-{question}
-
-Provide a conversational, informative answer that:
-- Directly addresses the question
-- Uses examples from the context
-- Is engaging for podcast listeners
-- Is 2-3 paragraphs max{wrap_up_instruction}
+Context:\n{context}\n
+Question from co-host:\n{question}
 
 Your response:"""
 
