@@ -31,8 +31,9 @@ if os.getenv("ENVIRONMENT") == "development":
         "http://localhost:5173",
     ]
 else:
-    # TODO: Configure allowed origins for production
-    allow_origins = []  # Replace with your production origins
+    # Configure allowed origins for production
+    # Replace with your actual production domain(s)
+    allow_origins = ["https://your-production-domain.com"]  # Update this
 
 app.add_middleware(
     CORSMiddleware,
@@ -49,4 +50,3 @@ app.include_router(conversation_router, prefix="/conversation", tags=["conversat
 @app.get("/")
 def health():
     return {"status": "ok"}
-

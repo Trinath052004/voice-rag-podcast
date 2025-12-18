@@ -1,4 +1,3 @@
-```language tests/test_rag.py
 import pytest
 from app.rag.retriever import retrieve
 
@@ -16,5 +15,3 @@ def test_retrieve_empty():
     # please populate the DB before running this test
     # for a more robust test
     # assert len(result) == 0
-
-```
