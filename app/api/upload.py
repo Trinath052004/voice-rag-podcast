@@ -4,7 +4,7 @@ import traceback
 
 router = APIRouter()
 
-@router.post("/upload/")
+@router.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
     try:
         data = await file.read()
