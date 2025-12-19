@@ -33,19 +33,13 @@ header p {
 }
 
 main {
-  display: grid;
-  grid-template-columns: 300px 1fr;
   flex: 1;
-}
-
-.sidebar {
-  background: #1a1a1a;
   padding: 1.5rem;
-  border-right: 1px solid #333;
 }
 
 .content {
-  padding: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -194,11 +188,6 @@ button:disabled {
 /* Responsive */
 @media (max-width: 768px) {
   main {
-    grid-template-columns: 1fr;
-  }
-  
-  .sidebar {
-    border-right: none;
-    border-bottom: 1px solid #333;
+    padding: 1rem;
   }
 }

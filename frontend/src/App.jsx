@@ -37,15 +37,15 @@ function App() {
       </header>
 
       <main>
-        <section className="sidebar">
-          <UploadPDF onUploadSuccess={() => setPdfUploaded(true)} />
-          
-          {pdfUploaded && (
-            <div className="status-badge">✅ PDF Ready</div>
-          )}
-        </section>
+        <div className="content">
+          <div className="upload-section">
+            <UploadPDF onUploadSuccess={() => setPdfUploaded(true)} />
+            
+            {pdfUploaded && (
+              <div className="status-badge">✅ PDF Ready</div>
+            )}
+          </div>
 
-        <section className="content">
           <PodcastPlayer />
 
           <div className="user-chat">
@@ -69,7 +69,7 @@ function App() {
               </button>
             </form>
           </div>
-        </section>
+        </div>
       </main>
     </div>
   );
